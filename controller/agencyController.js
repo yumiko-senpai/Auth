@@ -3,6 +3,7 @@ import TempUser from "../models/tempUser.js";
 import transporter from "../utils/sendEmails.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import University from "../models/university.js"; 
 
 export const sendOTP = async (req, res) => {
   try {
@@ -214,5 +215,23 @@ export const setNewPassword = async (req, res) => {
     res.status(200).json({ message: "Password reset successful" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAgencyById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const agency = await Agency.findById(id)
+      .select("-password -resetOTP -resetOTPExpiry -resetSessionToken")
+      .populate("partnerUniversities", "name country websiteURL");
+
+    if (!agency) {
+      return res.status(404).json({ message: "Agency not found" });
+    }
+
+    res.json(agency);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };

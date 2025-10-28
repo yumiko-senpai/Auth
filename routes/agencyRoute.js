@@ -6,7 +6,8 @@ import {
   login,
   sendPasswordResetOTP,
   verifyResetOTP,
-  setNewPassword
+  setNewPassword,
+  getAgencyById
 } from "../controller/agencyController.js";
 
 import { verifyToken } from "../middleware/verifyToken.js";
@@ -30,5 +31,7 @@ router.get("/home", verifyToken, (req, res) => {
 router.post("/auth/password-reset/send-otp", sendPasswordResetOTP);
 router.post("/auth/password-reset/verify-otp", verifyResetOTP);
 router.patch("/auth/password-reset", setNewPassword);
+
+router.get("/:id", getAgencyById)
 
 export default router;
