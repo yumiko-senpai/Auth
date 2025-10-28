@@ -20,7 +20,7 @@ const StudentSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: true
+      required: false
     },
     agencyId: {
       type: mongoose.Schema.Types.ObjectId,

@@ -78,7 +78,7 @@ export const login = async (req, res) => {
     );
 
     res.cookie("accessToken", accessToken, {
-        httpOnly: true,
+        httpOnly: flase,
         maxAge: 10 * 60 * 1000
       })
       .status(200)
@@ -181,13 +181,8 @@ export const verifyResetOTP = async (req, res) => {
     agency.resetSessionToken = resetSessionToken;
     await agency.save();
 
-    res.cookie("resetSessionToken", resetSessionToken, {
-        httpOnly: false,
-        sameSite: "lax",
-        maxAge: 10 * 60 * 1000
-      })
-      .status(200)
-      .json({ message: "OTP verified" });
+
+    res.status(200).json({ message: "OTP verified", resetSessionToken });
       
   } catch (error) {
     res.status(500).json({ message: error.message });
