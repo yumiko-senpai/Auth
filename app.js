@@ -15,7 +15,12 @@ app.use(express.json());
 
 dbConnect();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    credentials: true,
+  })
+);
 
 app.use("/api/v1/student", studentRouter);
 app.use("/api/v1/agency", agencyRouter);
